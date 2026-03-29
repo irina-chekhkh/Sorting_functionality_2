@@ -1,5 +1,6 @@
 package com.epam.training.iryna_chekh;
 
+import com.aventstack.extentreports.Status;
 import com.epam.training.iryna_chekh.driver.Driver;
 import com.epam.training.iryna_chekh.page.LoginPage;
 import com.epam.training.iryna_chekh.page.ProductsPage;
@@ -36,6 +37,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortTitlesAscending() {
+        ExtentTestManager.createTest("Log in user and sort products by their titles ascending "+driver);
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_ASC)
                 .getProductsNames();
@@ -46,6 +48,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortTitlesDescending() {
+        ExtentTestManager.createTest("Log in user and sort products by their titles descending "+driver);
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_DES)
                 .getProductsNames();
@@ -55,6 +58,8 @@ public class SortingTest {
 
     @Test
     public void shouldSortPricesAscending() {
+        ExtentTestManager.createTest("Log in user and sort products by their prices ascending "+driver);
+
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_ASC)
                 .getProductsPrice();
@@ -64,6 +69,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortPricesDescending() {
+        ExtentTestManager.createTest("Log in user and sort products by their prices descending "+driver);
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_DES)
                 .getProductsPrice();
@@ -73,7 +79,24 @@ public class SortingTest {
 
 
     @AfterMethod
-    public void closeDriver(ITestResult result) {
+    public void logResult(ITestResult result) {
+        if (result.getStatus() == ITestResult.SUCCESS) {
+            ExtentTestManager.log(Status.PASS, "Тест прошёл успешно");
+        } else if (result.getStatus() == ITestResult.FAILURE) {
+            ExtentTestManager.log(Status.FAIL, "Тест упал: " + result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            ExtentTestManager.log(Status.SKIP, "Тест пропущен: " + result.getThrowable());
+        }
+    }
+
+    @AfterMethod
+    public void closeDriver(){
         driver.closeDriver();
     }
+
+    @AfterSuite
+    public void generateReport(){
+        ExtentTestManager.flushReport();
+    }
+
 }
