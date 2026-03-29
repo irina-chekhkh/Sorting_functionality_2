@@ -1,4 +1,4 @@
-package com.epam.training.iryna_chekh;
+package com.epam.training.iryna_chekh.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

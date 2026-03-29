@@ -1,9 +1,9 @@
 package com.epam.training.iryna_chekh;
 
-import com.aventstack.extentreports.Status;
 import com.epam.training.iryna_chekh.driver.Driver;
 import com.epam.training.iryna_chekh.page.LoginPage;
 import com.epam.training.iryna_chekh.page.ProductsPage;
+import com.epam.training.iryna_chekh.report.ExtentTestManager;
 import com.epam.training.iryna_chekh.user.User;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -17,7 +17,7 @@ import static org.testng.Assert.assertEquals;
 
 public class SortingTest {
     private Driver driver;
-    private User currentUser = UserGenerator.createUser();
+    private final User currentUser = UserGenerator.createUser();
 
 
     @Parameters("browser")
@@ -31,13 +31,13 @@ public class SortingTest {
     private ProductsPage login(User user) {
         return new LoginPage(driver)
                 .openPage()
-                .enterUserNameAndPassword(currentUser)
+                .enterUserNameAndPassword(user)
                 .login();
     }
 
     @Test
     public void shouldSortTitlesAscending() {
-        ExtentTestManager.createTest("Log in user and sort products by their titles ascending "+driver);
+        ExtentTestManager.createTest("Log in user and sort products by their titles ascending " + driver);
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_ASC)
                 .getProductsNames();
@@ -48,7 +48,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortTitlesDescending() {
-        ExtentTestManager.createTest("Log in user and sort products by their titles descending "+driver);
+        ExtentTestManager.createTest("Log in user and sort products by their titles descending " + driver);
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_DES)
                 .getProductsNames();
@@ -58,7 +58,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortPricesAscending() {
-        ExtentTestManager.createTest("Log in user and sort products by their prices ascending "+driver);
+        ExtentTestManager.createTest("Log in user and sort products by their prices ascending " + driver);
 
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_ASC)
@@ -69,7 +69,7 @@ public class SortingTest {
 
     @Test
     public void shouldSortPricesDescending() {
-        ExtentTestManager.createTest("Log in user and sort products by their prices descending "+driver);
+        ExtentTestManager.createTest("Log in user and sort products by their prices descending " + driver);
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_DES)
                 .getProductsPrice();
@@ -79,23 +79,14 @@ public class SortingTest {
 
 
     @AfterMethod
-    public void logResult(ITestResult result) {
-        if (result.getStatus() == ITestResult.SUCCESS) {
-            ExtentTestManager.log(Status.PASS, "Тест прошёл успешно");
-        } else if (result.getStatus() == ITestResult.FAILURE) {
-            ExtentTestManager.log(Status.FAIL, "Тест упал: " + result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SKIP) {
-            ExtentTestManager.log(Status.SKIP, "Тест пропущен: " + result.getThrowable());
-        }
-    }
-
-    @AfterMethod
-    public void closeDriver(){
+    public void logResultAndCloseDriver(ITestResult result) {
+        TestResultLogger.logResult(result);
         driver.closeDriver();
     }
 
+
     @AfterSuite
-    public void generateReport(){
+    public void generateReport() {
         ExtentTestManager.flushReport();
     }
 

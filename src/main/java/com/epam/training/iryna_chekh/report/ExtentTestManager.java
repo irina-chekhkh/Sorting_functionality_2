@@ -1,11 +1,12 @@
-package com.epam.training.iryna_chekh;
+package com.epam.training.iryna_chekh.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
+
 public class ExtentTestManager {
-    private static ExtentReports extent = ExtentReportManager.getExtentReport();
+    private static final ExtentReports extent = ExtentReportManager.getExtentReport();
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
     public static synchronized void createTest(String testName) {

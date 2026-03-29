@@ -33,6 +33,14 @@
       <version>6.3.3</version>
     </dependency>
 
+    <!-- Source: https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+    <dependency>
+      <groupId>com.aventstack</groupId>
+      <artifactId>extentreports</artifactId>
+      <version>4.1.7</version>
+      <scope>compile</scope>
+    </dependency>
+
   </dependencies>
 
 

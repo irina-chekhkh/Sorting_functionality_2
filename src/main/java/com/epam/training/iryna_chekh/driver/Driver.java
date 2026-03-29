@@ -1,9 +1,11 @@
 package com.epam.training.iryna_chekh.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Driver {
     private WebDriver driver;
@@ -11,7 +13,7 @@ public class Driver {
     public Driver() {
     }
 
-    public WebDriver getDriver(){
+    public WebDriver getDriver() {
         return driver;
     }
 
@@ -31,15 +33,16 @@ public class Driver {
         driver.manage().window().maximize();
     }
 
-    public void  closeDriver(){
+    public void closeDriver() {
         if (driver != null) {
             driver.quit();
-            driver=null;
+            driver = null;
         }
     }
 
     @Override
     public String toString() {
-        return driver.toString();
+        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+        return caps.getBrowserName();
     }
 }
