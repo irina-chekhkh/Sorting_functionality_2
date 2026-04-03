@@ -1,10 +1,11 @@
 package com.epam.training.iryna_chekh;
 
-import com.epam.training.iryna_chekh.driver.Driver;
+import com.epam.training.iryna_chekh.driver.SingletonDriver;
 import com.epam.training.iryna_chekh.page.LoginPage;
 import com.epam.training.iryna_chekh.page.ProductsPage;
 import com.epam.training.iryna_chekh.report.ExtentTestManager;
 import com.epam.training.iryna_chekh.user.User;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -16,16 +17,14 @@ import static org.testng.Assert.assertEquals;
 
 
 public class SortingTest {
-    private Driver driver;
+    private WebDriver driver;
     private final User currentUser = UserGenerator.createUser();
 
 
-    @Parameters("browser")
     @BeforeMethod
-    public void initDriver(String browser) {
-        driver = new Driver();
-        driver.setDriver(browser);
-
+    public void initDriver() {
+        SingletonDriver.getInstance();
+        driver = SingletonDriver.getDriver();
     }
 
     private ProductsPage login(User user) {
@@ -81,7 +80,7 @@ public class SortingTest {
     @AfterMethod
     public void logResultAndCloseDriver(ITestResult result) {
         TestResultLogger.logResult(result);
-        driver.closeDriver();
+        SingletonDriver.closeDriver();
     }
 
 
