@@ -11,8 +11,6 @@ import org.testng.annotations.*;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
@@ -21,8 +19,6 @@ import static org.assertj.core.api.Assertions.*;
 public class SortingTest {
     private static WebDriver driver;
     private final static User currentUser = UserGenerator.createUser();
-    private static final Logger LOGGER = Logger.getLogger(SortingTest.class.getName());
-
 
     @Parameters("browser")
     @BeforeMethod
@@ -31,17 +27,11 @@ public class SortingTest {
             browser = System.getProperty("browser");
         }
 
-        LOGGER.log(Level.CONFIG, "Initializing driver for browser: {0}", browser);
-
         SingletonDriver.getInstance(browser);
         driver = SingletonDriver.getDriver();
-
-        LOGGER.log(Level.INFO, "Driver initialized successfully");
     }
 
     private ProductsPage login(User user) {
-        LOGGER.log(Level.INFO, "Logging in user: {0}", user.getUserName());
-
         return new LoginPage(driver)
                 .openPage()
                 .enterUserNameAndPassword(user)
@@ -52,8 +42,6 @@ public class SortingTest {
     public void shouldSortTitlesAscending() {
         ExtentTestManager.createTest("Log in user and sort products by their " +
                 "titles ascending " + driver);
-        LOGGER.log(Level.INFO, "Executing test: shouldSortTitlesAscending");
-
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_ASC)
                 .getProductsNames();
@@ -67,8 +55,6 @@ public class SortingTest {
     @Test(description = "Testing the functionality of sorting product names in Z–A order")
     public void shouldSortTitlesDescending() {
         ExtentTestManager.createTest("Log in user and sort products by their titles descending " + driver);
-
-        LOGGER.log(Level.INFO, "Executing test: shouldSortTitlesDescending");
 
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_DES)
@@ -84,8 +70,6 @@ public class SortingTest {
     public void shouldSortPricesAscending() {
         ExtentTestManager.createTest("Log in user and sort products by their prices ascending " + driver);
 
-        LOGGER.log(Level.INFO, "Executing test: shouldSortPricesAscending");
-
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_ASC)
                 .getProductsPrice();
@@ -100,8 +84,6 @@ public class SortingTest {
     public void shouldSortPricesDescending() {
         ExtentTestManager.createTest("Log in user and sort products by their prices descending " + driver);
 
-        LOGGER.log(Level.INFO, "Executing test: shouldSortPricesDescending");
-
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_DES)
                 .getProductsPrice();
@@ -115,18 +97,13 @@ public class SortingTest {
 
     @AfterMethod
     public void logResultAndCloseDriver(ITestResult result) {
-        LOGGER.log(Level.INFO, "Finalizing test: {0}", result.getName());
-
         TestResultLogger.logResult(result);
         SingletonDriver.closeDriver();
-
-        LOGGER.log(Level.INFO, "Driver closed");
     }
 
 
     @AfterSuite
     public void generateReport() {
-        LOGGER.log(Level.INFO, "Flushing ExtentReport after suite execution");
         ExtentTestManager.flushReport();
     }
 

@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -19,27 +18,25 @@ public class ProductsPage extends AbstractPage {
 
 
     @FindBy(css = "div[data-test=inventory-item-name]")
-    List<WebElement> productNames;
+    private List<WebElement> productNames;
 
     @FindBy(css = "div[data-test=inventory-item-price]")
-    List<WebElement> productPrices;
+    private List<WebElement> productPrices;
 
     public ProductsPage(WebDriver driver) {
         super(driver);
-        LOGGER.log(Level.INFO, "Initialize ProductsPage with driver: {0}", driver.toString());
         PageFactory.initElements(driver, this);
     }
 
     public ProductsPage sortElements(SortingParameter sortingParameter) {
-        LOGGER.log(Level.INFO, "Waiting up to 10 seconds " +
-                "for sort dropdown to be visible");
         WebElement sortDropdown = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
                         By.cssSelector("select[data-test='product-sort-container']")
                 )
         );
 
-        LOGGER.log(Level.INFO, "Applying sorting: {0}", sortingParameter.name());
+        LOGGER.info("Choosing sorting type:" + sortingParameter.name());
+
         new Select(sortDropdown).selectByValue(
                 sortingParameter.getValue()
         );
@@ -47,14 +44,14 @@ public class ProductsPage extends AbstractPage {
     }
 
     public List<String> getProductsNames() {
-        LOGGER.log(Level.INFO, "Getting products names");
+        LOGGER.info("Getting products names");
         return productNames.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
 
     public List<Double> getProductsPrice() {
-        LOGGER.log(Level.INFO, "Parsing product prices");
+        LOGGER.info("Getting product prices");
         return productPrices.stream()
                 .map(e -> Double.parseDouble(
                                 e.getText().replace("$", "")
