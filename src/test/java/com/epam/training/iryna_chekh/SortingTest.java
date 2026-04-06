@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.*;
 
 
 public class SortingTest {
-    private static WebDriver driver;
     private final static User currentUser = UserGenerator.createUser();
 
     @Parameters("browser")
@@ -28,11 +27,10 @@ public class SortingTest {
         }
 
         SingletonDriver.getInstance(browser);
-        driver = SingletonDriver.getDriver();
     }
 
     private ProductsPage login(User user) {
-        return new LoginPage(driver)
+        return new LoginPage(SingletonDriver.getDriver())
                 .openPage()
                 .enterUserNameAndPassword(user)
                 .login();
@@ -41,7 +39,7 @@ public class SortingTest {
     @Test(description = "Testing the functionality of sorting product names in A–Z order")
     public void shouldSortTitlesAscending() {
         ExtentTestManager.createTest("Log in user and sort products by their " +
-                "titles ascending " + driver);
+                "titles ascending " + SingletonDriver.getDriver().toString());
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_ASC)
                 .getProductsNames();
@@ -54,7 +52,8 @@ public class SortingTest {
 
     @Test(description = "Testing the functionality of sorting product names in Z–A order")
     public void shouldSortTitlesDescending() {
-        ExtentTestManager.createTest("Log in user and sort products by their titles descending " + driver);
+        ExtentTestManager.createTest("Log in user and sort products by their titles descending "
+                + SingletonDriver.getDriver().toString());
 
         List<String> actualNames = login(currentUser)
                 .sortElements(SortingParameter.TITLE_DES)
@@ -68,7 +67,8 @@ public class SortingTest {
 
     @Test(description = "Verification of product sorting by ascending price")
     public void shouldSortPricesAscending() {
-        ExtentTestManager.createTest("Log in user and sort products by their prices ascending " + driver);
+        ExtentTestManager.createTest("Log in user and sort products by their prices ascending "
+                + SingletonDriver.getDriver().toString());
 
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_ASC)
@@ -82,7 +82,8 @@ public class SortingTest {
 
     @Test(description = "Verification of product sorting by descending price")
     public void shouldSortPricesDescending() {
-        ExtentTestManager.createTest("Log in user and sort products by their prices descending " + driver);
+        ExtentTestManager.createTest("Log in user and sort products by their prices descending "
+                + SingletonDriver.getDriver().toString());
 
         List<Double> actualPrices = login(currentUser)
                 .sortElements(SortingParameter.PRICE_DES)

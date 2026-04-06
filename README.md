@@ -1,21 +1,6 @@
 To start the program, type the following in the command line: mvn clean test.
 The report will be generated automatically after the tests run; it will be saved in the reports folder. 
-To run tests in a specific browser, you must temporarily disable the Suite file configuration in pom.xml (comment out the `suiteXmlFiles` block) and execute the command with the following parameter: mvn clean test -Dbrowser=BROWSER_NAME
 
 <img width="223" height="237" alt="image" src="https://github.com/user-attachments/assets/9d59cc1b-10af-4468-a262-54811b5d1fa3" />
 
-Task:
-Sorting functionality. 
-Focus: Functionality of different sorting options 
-Launch URL: https://www.saucedemo.com 
-UC-1 Sort by Name (A to Z) Login as standard_user. Select “Name (A to Z)” in sorting dropdown. Verify items are sorted in alphabetical order (A → Z). 
-UC-2 Sort by Name (Z to A) Login as standard_user. Select “Name (Z to A)” in sorting dropdown. Verify items are sorted in reverse alphabetical order (Z → A). 
-UC-3 Sort by Price (low to high) Login as standard_user. Select “Price (low to high)” in sorting dropdown. Verify items are sorted by price (low → high). 
-UC-4 Sort by Price (high to low) Login as standard_user. Select “Price (high to low)” in sorting dropdown. Verify items are sorted by price (high → low). 
-Technical Requirements: 
-Tool: Selenium WebDriver. 
-Browsers: Chrome, Firefox (Run in Parallel). 
-Pattern: Page Object Model (POM). 
-Locators: CSS Selectors, Xpath. 
-Reporting: Generate an Allure Report (or similar HTML report) for the test run. 
-Documentation: Add a README.md explaining how to run the tests and generate the report.
+Sorting functionality. Focus: Functionality of different sorting options Launch URL: https://www.saucedemo.com UC-1 Sort by Name (A to Z) Login as standard_user. Select “Name (A to Z)” in sorting dropdown. Verify items are sorted in alphabetical order (A → Z). UC-2 Sort by Name (Z to A) Login as standard_user. Select “Name (Z to A)” in sorting dropdown. Verify items are sorted in reverse alphabetical order (Z → A). UC-3 Sort by Price (low to high) Login as standard_user. Select “Price (low to high)” in sorting dropdown. Verify items are sorted by price (low → high). UC-4 Sort by Price (high to low) Login as standard_user. Select “Price (high to low)” in sorting dropdown. Verify items are sorted by price (high → low). Technical Requirements: Tool: Selenium WebDriver. Browsers: Chrome, Firefox (Run in Parallel). Pattern: Page Object Model (POM). Locators: CSS Selectors, Xpath. Reporting: Generate an Allure Report (or similar HTML report) for the test run. Documentation: Add a README.md explaining how to run the tests and generate the report.

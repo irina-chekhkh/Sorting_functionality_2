@@ -57,9 +57,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/parallelTesting.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <threadCount>4</threadCount>
+
+<!--                    <suiteXmlFiles>-->
+<!--                        <suiteXmlFile>src/test/resources/parallelTesting.xml</suiteXmlFile>-->
+<!--                    </suiteXmlFiles>-->
                 </configuration>
             </plugin>
         </plugins>
