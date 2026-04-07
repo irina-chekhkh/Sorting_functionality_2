@@ -51,18 +51,26 @@ public class ProductsPage extends AbstractPage {
 
     public List<String> getProductsNames() {
         sendInfoToLoggerAndReport("Getting products names");
-        return productNames.stream()
+        List<String> names = productNames.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
+        if (names.isEmpty()){
+            throw new IllegalArgumentException("Array of names can't be empty");
+        }
+        return names;
     }
 
     public List<Double> getProductsPrice() {
         sendInfoToLoggerAndReport("Getting product prices");
-        return productPrices.stream()
+        List<Double> prices = productPrices.stream()
                 .map(e -> Double.parseDouble(
                                 e.getText().replace("$", "")
                         )
                 )
                 .collect(Collectors.toList());
+        if (prices.isEmpty()){
+            throw new IllegalArgumentException("Array of prices can't be empty");
+        }
+        return prices;
     }
 }

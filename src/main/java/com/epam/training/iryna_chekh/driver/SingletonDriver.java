@@ -1,11 +1,8 @@
 package com.epam.training.iryna_chekh.driver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.logging.Logger;
 
@@ -17,32 +14,19 @@ public class SingletonDriver {
     private SingletonDriver() {
     }
 
-    public static SingletonDriver getInstance(String browser) {
+    public static SingletonDriver getInstance() {
         if (instance == null) {
             synchronized (SingletonDriver.class) {
-                instance = new SingletonDriver();
+                if (instance == null) {
+                    instance = new SingletonDriver();
+                }
             }
-        }
-        if (driver.get() == null) {
-            initDriver(browser);
-            LOGGER.info("Browser session started");
         }
         return instance;
     }
 
-    private static void initDriver(String browser) {
-        switch (browser) {
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                driver.set(new ChromeDriver());
-                break;
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                driver.set(new FirefoxDriver());
-                break;
-            default:
-                throw new IllegalArgumentException("Can't find browser: " + browser);
-        }
+    public static void setDriver(WebDriver newDriver) {
+        driver.set(newDriver);
     }
 
     public static WebDriver getDriver() {

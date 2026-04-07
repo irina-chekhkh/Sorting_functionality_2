@@ -1,5 +1,6 @@
 package com.epam.training.iryna_chekh;
 
+import com.epam.training.iryna_chekh.driver.DriverFactory;
 import com.epam.training.iryna_chekh.driver.SingletonDriver;
 import com.epam.training.iryna_chekh.page.LoginPage;
 import com.epam.training.iryna_chekh.page.ProductsPage;
@@ -10,11 +11,11 @@ import org.testng.annotations.*;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static org.assertj.core.api.Assertions.*;
 
-
+@Listeners({com.epam.training.iryna_chekh.ExtentTestListener.class})
 public class SortingTest {
     private final static User currentUser = UserGenerator.createUser();
 
@@ -24,8 +25,7 @@ public class SortingTest {
         if (browser.equals("nothing")) {
             browser = System.getProperty("browser");
         }
-
-        SingletonDriver.getInstance(browser);
+        DriverFactory.createDriver(browser);
     }
 
     private ProductsPage login(User user) {
@@ -43,10 +43,9 @@ public class SortingTest {
                 .sortElements(SortingParameter.TITLE_ASC)
                 .getProductsNames();
 
-        assertThat(actualNames).containsExactlyElementsOf(
-                actualNames.stream()
-                        .sorted()
-                        .collect(Collectors.toList()));
+        assertThat(actualNames)
+                .describedAs("Product names should be sorted alphabetically")
+                .isSortedAccordingTo(Comparator.naturalOrder());
     }
 
     @Test(description = "Testing the functionality of sorting product names in Z–A order")
@@ -58,10 +57,9 @@ public class SortingTest {
                 .sortElements(SortingParameter.TITLE_DES)
                 .getProductsNames();
 
-        assertThat(actualNames).containsExactlyElementsOf(
-                actualNames.stream()
-                        .sorted(Comparator.reverseOrder())
-                        .collect(Collectors.toList()));
+        assertThat(actualNames)
+                .describedAs("Product names should be sorted in reverse alphabetical order")
+                .isSortedAccordingTo(Comparator.reverseOrder());
     }
 
     @Test(description = "Verification of product sorting by ascending price")
@@ -73,10 +71,9 @@ public class SortingTest {
                 .sortElements(SortingParameter.PRICE_ASC)
                 .getProductsPrice();
 
-        assertThat(actualPrices).containsExactlyElementsOf(
-                actualPrices.stream()
-                        .sorted()
-                        .collect(Collectors.toList()));
+        assertThat(actualPrices)
+                .describedAs("Product prices should be sorted in ascending order")
+                .isSortedAccordingTo(Comparator.naturalOrder());
     }
 
     @Test(description = "Verification of product sorting by descending price")
@@ -88,16 +85,14 @@ public class SortingTest {
                 .sortElements(SortingParameter.PRICE_DES)
                 .getProductsPrice();
 
-        assertThat(actualPrices).containsExactlyElementsOf(
-                actualPrices.stream()
-                        .sorted(Comparator.reverseOrder())
-                        .collect(Collectors.toList()));
+        assertThat(actualPrices)
+                .describedAs("Product prices should be sorted in descending order")
+                .isSortedAccordingTo(Comparator.naturalOrder());
     }
 
 
     @AfterMethod
     public void logResultAndCloseDriver(ITestResult result) {
-        TestResultLogger.logResult(result);
         SingletonDriver.closeDriver();
     }
 
