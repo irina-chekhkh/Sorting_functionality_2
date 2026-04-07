@@ -87,7 +87,7 @@ public class SortingTest {
 
         assertThat(actualPrices)
                 .describedAs("Product prices should be sorted in descending order")
-                .isSortedAccordingTo(Comparator.naturalOrder());
+                .isSortedAccordingTo(Comparator.reverseOrder());
     }
 
 
