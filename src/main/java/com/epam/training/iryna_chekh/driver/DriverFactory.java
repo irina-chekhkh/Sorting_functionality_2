@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
-    public static void createDriver(String browser) {
+    public static WebDriver createDriver(String browser) {
         WebDriver driver;
         switch (browser) {
             case "chrome":
@@ -20,6 +20,6 @@ public class DriverFactory {
             default:
                 throw new IllegalArgumentException("Can't find browser: " + browser);
         }
-        SingletonDriver.setDriver(driver);
+        return driver;
     }
 }

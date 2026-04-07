@@ -1,6 +1,5 @@
 package com.epam.training.iryna_chekh;
 
-import com.epam.training.iryna_chekh.driver.DriverFactory;
 import com.epam.training.iryna_chekh.driver.SingletonDriver;
 import com.epam.training.iryna_chekh.page.LoginPage;
 import com.epam.training.iryna_chekh.page.ProductsPage;
@@ -25,7 +24,7 @@ public class SortingTest {
         if (browser.equals("nothing")) {
             browser = System.getProperty("browser");
         }
-        DriverFactory.createDriver(browser);
+        SingletonDriver.getInstance(browser);
     }
 
     private ProductsPage login(User user) {

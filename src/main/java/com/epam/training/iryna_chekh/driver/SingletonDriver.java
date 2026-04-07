@@ -14,7 +14,7 @@ public class SingletonDriver {
     private SingletonDriver() {
     }
 
-    public static SingletonDriver getInstance() {
+    public static SingletonDriver getInstance(String browser) {
         if (instance == null) {
             synchronized (SingletonDriver.class) {
                 if (instance == null) {
@@ -22,12 +22,13 @@ public class SingletonDriver {
                 }
             }
         }
+        if (driver.get() == null) {
+            driver.set(DriverFactory.createDriver(browser));
+            LOGGER.info("Browser session started");
+        }
         return instance;
     }
 
-    public static void setDriver(WebDriver newDriver) {
-        driver.set(newDriver);
-    }
 
     public static WebDriver getDriver() {
         return driver.get();
